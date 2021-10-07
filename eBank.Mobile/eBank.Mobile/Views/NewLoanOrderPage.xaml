@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:eBank.Mobile.ViewModels"
+             x:Class="eBank.Mobile.Views.NewLoanOrderPage">
+    <ContentPage.BindingContext>
+        <vm:NewLoanOrderViewModel></vm:NewLoanOrderViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" Padding="10" VerticalOptions="CenterAndExpand">
+            <Label Text="{Binding Loan.Name}"            
+                   LineBreakMode="NoWrap" 
+                   Style="{DynamicResource ListItemTextStyle}"             
+                   FontSize="16" />
+            <Label Text="{Binding Loan.EIR, StringFormat='Interest rate: {0:F0}%'}"                              
+                   LineBreakMode="NoWrap"                
+                   Style="{DynamicResource ListItemDetailTextStyle}"      
+                   FontSize="13" />
+            <Label Text="{Binding Loan.MinPayments, StringFormat='Min payments: {0:F0}'}"                   
+                   LineBreakMode="NoWrap"   
+                   Style="{DynamicResource ListItemDetailTextStyle}"            
+                   FontSize="13" />
+            <Label Text="{Binding Loan.MaxPayments, StringFormat='Max payments: {0:F0}'}"
+                   LineBreakMode="NoWrap"                      
+                   Style="{DynamicResource ListItemDetailTextStyle}"          
+                   FontSize="13" />
+            <Label Text="{Binding Loan.Lender.Currency.CurrencyId, StringFormat='Currency: {0:F0}'}"                     
+                   LineBreakMode="NoWrap"             
+                   Style="{DynamicResource ListItemDetailTextStyle}"
+                   FontSize="13" />
+            <Label Text="{Binding Loan.Limit, StringFormat='Limit: {0:F0}'}"                     
+                   LineBreakMode="NoWrap"             
+                   Style="{DynamicResource ListItemDetailTextStyle}"
+                   FontSize="13" />
+
+            <Label  Text="Amount"></Label>
+            <Entry Text="{Binding Amount}"></Entry>
+            <Button Command="{Binding RecommendPeriodCommand}"  HorizontalOptions="FillAndExpand" Text="Recommend payment period"></Button>
+
+            <Label  Text="Months"></Label>
+            <Entry Text="{Binding Months}"></Entry>
+            <Button Command="{Binding CalculateTotalsCommand}"  HorizontalOptions="FillAndExpand" Text="Calculate totals and monthly payment rate"></Button>
+
+            <Label Text="{Binding TotalInterest, StringFormat='Total interest: {0:F0}'}"                     
+                   LineBreakMode="NoWrap"             
+                   Style="{DynamicResource ListItemDetailTextStyle}"
+                   FontSize="13" />
+            <Label Text="{Binding Total, StringFormat='Total: {0:F0}'}"                     
+                   LineBreakMode="NoWrap"             
+                   Style="{DynamicResource ListItemDetailTextStyle}"
+                   FontSize="13" />
+            <Label Text="{Binding MonthlyRate, StringFormat='Monthly rate: {0:F0}'}"                     
+                   LineBreakMode="NoWrap"             
+                   Style="{DynamicResource ListItemDetailTextStyle}"
+                   FontSize="13" />
+
+            <Label  Text="Deposit funds on account:"></Label>
+            <Picker ItemsSource="{Binding AccountList}" SelectedItem="{Binding SelectedAccount}" ItemDisplayBinding="{Binding AccountNumber.Number}"></Picker>
+
+            <Button Command="{Binding OrderLoanCommand}"  HorizontalOptions="FillAndExpand" Text="Submit order"></Button>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

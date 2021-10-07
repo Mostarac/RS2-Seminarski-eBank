@@ -1,0 +1,56 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:eBank.Mobile.ViewModels;assembly=eBank.Mobile"
+             x:Class="eBank.Mobile.Views.AccountsPage">
+    <ContentPage.BindingContext>
+        <viewModels:AccountsViewModel></viewModels:AccountsViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Accounts"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <ListView x:Name="AccountView" ItemsSource="{Binding AccountList}">
+                <!--ItemSelected="ListView_OnItemSelected" u liniju iznad ovo treba ic tacnije u <> sa itemselected-->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10" Orientation="Horizontal">
+                                <StackLayout Orientation="Vertical">
+                                    <Label Text="{Binding AccountType.Name}" 
+                                           LineBreakMode="NoWrap" 
+                                           Style="{DynamicResource ListItemTextStyle}" 
+                                           FontSize="16" />
+                                    <Label Text="{Binding AccountNumber.Number}" 
+                                           LineBreakMode="NoWrap"
+                                           Style="{DynamicResource ListItemDetailTextStyle}"
+                                           FontSize="13" />
+                                    <Label Text="{Binding Currency.CurrencyId, StringFormat='Currency: {0:F0}'}" 
+                                           LineBreakMode="NoWrap"
+                                           Style="{DynamicResource ListItemDetailTextStyle}"
+                                           FontSize="13" />
+                                    <Label Text="{Binding Balance, StringFormat='Balance: {0:F0}'}" 
+                                           LineBreakMode="NoWrap"
+                                           Style="{DynamicResource ListItemDetailTextStyle}"
+                                           FontSize="13" />
+                                    <Label Text="{Binding Limit, StringFormat='Limit: {0:F0}'}" 
+                                           LineBreakMode="NoWrap"
+                                           Style="{DynamicResource ListItemDetailTextStyle}"
+                                           FontSize="13" />
+                                    <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand">
+                                        <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand">
+                                            <Button Command="{Binding BindingContext.TransactionHistoryCommand, Source={x:Reference Name=AccountView}}" CommandParameter="{Binding .}" Text="History"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand">
+                                            <Button Command="{Binding BindingContext.NewTransactionCommand, Source={x:Reference Name=AccountView}}" CommandParameter="{Binding .}" Text="New Transaction"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

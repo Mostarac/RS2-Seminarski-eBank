@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:eBank.Mobile.ViewModels"
+             x:Class="eBank.Mobile.Views.LoanOrderDetailPage">
+    <ContentPage.BindingContext>
+        <vm:LoanOrderDetailViewModel></vm:LoanOrderDetailViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" Padding="10" VerticalOptions="CenterAndExpand">
+            <Label Text="{Binding _loanOrder.Loan.Name}"            
+                   LineBreakMode="NoWrap" 
+                   Style="{DynamicResource ListItemTextStyle}"             
+                   FontSize="16" />
+            <Label Text="{Binding Warning}"                     
+                   LineBreakMode="NoWrap"             
+                   Style="{DynamicResource ListItemDetailTextStyle}"
+                   FontSize="13" />
+            <Label Text="{Binding NextPaymentDue}"                     
+                   LineBreakMode="NoWrap"             
+                   Style="{DynamicResource ListItemDetailTextStyle}"
+                   FontSize="13" />
+            <Label Text="{Binding _loanOrder.Loan.EIR, StringFormat='Interest rate: {0:F0}%'}"                              
+                   LineBreakMode="NoWrap"                
+                   Style="{DynamicResource ListItemDetailTextStyle}"      
+                   FontSize="13" />
+            <Label Text="{Binding _loanOrder.Months, StringFormat='Payments: {0:F0}'}"                   
+                   LineBreakMode="NoWrap"   
+                   Style="{DynamicResource ListItemDetailTextStyle}"            
+                   FontSize="13" />
+            <Label Text="{Binding Amount, StringFormat='Loan amount: {0:F0}'}"                     
+                   LineBreakMode="NoWrap"             
+                   Style="{DynamicResource ListItemDetailTextStyle}"
+                   FontSize="13" />
+
+            <Label Text="{Binding TotalInterest, StringFormat='Total interest: {0:F0}'}"                     
+                   LineBreakMode="NoWrap"             
+                   Style="{DynamicResource ListItemDetailTextStyle}"
+                   FontSize="13" />
+            <Label Text="{Binding Total, StringFormat='Total: {0:F0}'}"                     
+                   LineBreakMode="NoWrap"             
+                   Style="{DynamicResource ListItemDetailTextStyle}"
+                   FontSize="13" />
+            <Label Text="{Binding MonthlyRate, StringFormat='Monthly rate: {0:F0}'}"                     
+                   LineBreakMode="NoWrap"             
+                   Style="{DynamicResource ListItemDetailTextStyle}"
+                   FontSize="13" />
+            <Label Text="{Binding Remaining, StringFormat='Remaining amount: {0:F0}'}"                     
+                   LineBreakMode="NoWrap"             
+                   Style="{DynamicResource ListItemDetailTextStyle}"
+                   FontSize="13" />
+
+            <Label IsVisible="{Binding IsActive}" Text="Pay from account:"></Label>
+            <Picker IsVisible="{Binding IsActive}" ItemsSource="{Binding AccountList}" SelectedItem="{Binding SelectedAccount}" SelectedIndexChanged="Picker_SelectedIndexChanged" ItemDisplayBinding="{Binding AccountNumber.Number}"></Picker>
+
+            <Label IsVisible="{Binding IsActive}" Text="{Binding Balance, StringFormat='Balance : {0:F0}'}"                     
+                   LineBreakMode="NoWrap"             
+                   Style="{DynamicResource ListItemDetailTextStyle}"
+                   FontSize="13" />
+
+            <Button IsVisible="{Binding IsActive}" Command="{Binding PayCommand}" CommandParameter="Regular"  HorizontalOptions="FillAndExpand" Text="{Binding PayNext, StringFormat='Pay next: ({0:F0})'}"></Button>
+
+            <Label IsVisible="{Binding IsActive}"  Text="(Optional) Custom payment amount"></Label>
+            <Entry IsVisible="{Binding IsActive}" Text="{Binding CustomPaymentAmount}"></Entry>
+            <Button IsVisible="{Binding IsActive}" Command="{Binding PayCommand}" CommandParameter="Custom"  HorizontalOptions="FillAndExpand" Text="Pay custom"></Button>
+
+            <Label  Text="Payment history:"></Label>
+            <ListView x:Name="TransactionHistoryView" ItemsSource="{Binding TransactionList}">
+                <!--ItemSelected="ListView_OnItemSelected" u liniju iznad ovo treba ic tacnije u <> sa itemselected-->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10" Orientation="Horizontal">
+                                <StackLayout Orientation="Vertical">
+                                    <Label Text="{Binding Amount}" 
+                                           LineBreakMode="NoWrap"
+                                           Style="{DynamicResource ListItemDetailTextStyle}"
+                                           FontSize="13" />
+                                    <Label Text="{Binding Date}" 
+                                           LineBreakMode="NoWrap"
+                                           Style="{DynamicResource ListItemDetailTextStyle}"
+                                           FontSize="13" />
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

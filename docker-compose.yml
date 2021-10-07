@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  ebank-sql:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=QWElkj132!
+      - MSSQL_PID=Developer
+    ports:
+      - 1433:1433
+    networks:
+      - ebankappnet
+
+    
+  ebank-api:
+    restart: unless-stopped
+    build: .
+    environment:
+      - ConnectionStrings:eBankDev=Server=ebank-sql,1433;Database=IB140085M;User=sa;Password=QWElkj132!;ConnectRetryCount=0
+    ports:
+      - 64236:80
+    networks:
+      - ebankappnet     
+    links:
+      - ebank-sql
+    depends_on:
+      - ebank-sql
+      
+networks:
+  ebankappnet:
+    driver: bridge

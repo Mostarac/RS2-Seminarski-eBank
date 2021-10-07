@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:eBank.Mobile.ViewModels"
+             xmlns:converters="clr-namespace:eBank.Mobile.Converters" 
+             x:Class="eBank.Mobile.Views.ProfilePage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageConverter x:Key="ImgConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <vm:ProfileViewModel></vm:ProfileViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" Padding="10" VerticalOptions="CenterAndExpand">
+
+            <Frame 
+                Padding="0"
+                WidthRequest="165"
+                HeightRequest="165" 
+                CornerRadius="100"
+                IsClippedToBounds="True"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                BorderColor="Black"
+            >
+                <Image 
+                    Source="{Binding UserImage, Converter={StaticResource ImgConverter}}" 
+                    Aspect="AspectFill"
+                >
+                </Image>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer 
+                        Command="{Binding ChangeImage}"
+                        CommandParameter="Image1"
+                    />
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            <Label Text="{Binding FullName}"            
+                   LineBreakMode="NoWrap" 
+                   Style="{DynamicResource ListItemTextStyle}"             
+                   FontSize="16" />
+            <Label Text="{Binding JMBG, StringFormat='JMBG: {0:F0}%'}"                              
+                   LineBreakMode="NoWrap"                
+                   Style="{DynamicResource ListItemDetailTextStyle}"      
+                   FontSize="13" />
+            <Label Text="{Binding DateOfBirth, StringFormat='DOB: {0:F0}'}"                   
+                   LineBreakMode="NoWrap"   
+                   Style="{DynamicResource ListItemDetailTextStyle}"            
+                   FontSize="13" />
+
+            <Label  Text="Email"></Label>
+            <Entry Text="{Binding Email}"></Entry>
+
+            <Label  Text="Username"></Label>
+            <Entry Text="{Binding Username}"></Entry>
+
+            <Label  Text="Password"></Label>
+            <Entry Text="{Binding Password}"></Entry>
+
+            <Label  Text="City:"></Label>
+            <Picker ItemsSource="{Binding CityList}" SelectedItem="{Binding SelectedCity}" ItemDisplayBinding="{Binding Name}"></Picker>
+
+            <Label  Text="Address"></Label>
+            <Entry Text="{Binding Address}"></Entry>
+
+            <Button Command="{Binding UpdateCommand}"  HorizontalOptions="FillAndExpand" Text="Update profile"></Button>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
